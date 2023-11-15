@@ -7,8 +7,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
+  
+  urlImage: string = '../../assets/logo-pokeapi.png' // Imagen de usuario
   constructor() { }
-
+  
   ngOnInit(): void {
   }
 

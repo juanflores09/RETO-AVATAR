@@ -1,8 +1,13 @@
 header{
     background-color: #152a47;
-    height: 7vh;
+    height: 5vh;
     color: #fff;
     display: flex;
     align-items: center;
-    padding: 0 1rem; 
+    padding: 0.6rem 2rem; 
+
+    img{
+        height: 100%;
+        padding: 0.5rem;
+    }
 }

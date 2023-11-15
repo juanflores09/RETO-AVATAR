@@ -27,6 +27,7 @@ export class HomeComponent implements OnInit {
 
     this.apiService.getList().pipe(
       switchMap((res) => {
+        console.log("RES -->",res)
         const requests: Observable<IPokemon>[] = res.results.map((pokemon: any) => 
           this.apiService.getByName(pokemon.name));
         return forkJoin(requests); // Utilizamos forkJoin para manejar las solicitudes en paralelo

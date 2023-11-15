@@ -2,10 +2,12 @@ main{
     display: flex;
     justify-content: center;
     padding-top: 8vh;
+    padding-bottom: 6vh;
 }
 
 .container{
     width: 75%;
+    height: 90%;
     display: grid;
     grid-template-columns: repeat(auto-fit,minmax(15rem, 1fr));
     gap: 2rem;
@@ -22,7 +24,7 @@ main{
     background: linear-gradient(to bottom, 	#507cbd 50%, #eeeaea 50%);
     img{
         width: 80%;
-        background-color: #d7d7d7;
+        background-color: rgb(225, 225, 227);
         border-radius: 50%;
         padding: 0.6rem;
     }
