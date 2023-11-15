@@ -28,7 +28,7 @@ export class ApiService {
   }
 
   // METODO PARA BUSCAR POKEMON POR ID
-  getByName(name:number){
+  getByName(name:string){
     return this.httpClient.get<IPokemon>(`${this.url}/pokemon/${name}`)
   }
 }

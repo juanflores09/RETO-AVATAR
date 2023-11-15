@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { IPokemon } from 'src/app/interfaces/pokemon';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-detail',
@@ -7,9 +10,36 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DetailComponent implements OnInit {
 
-  constructor() { }
+
+  name:string = '';
+  image:string='';
+  pokemon!:IPokemon;
+
+  constructor(
+    private activatedRoute:ActivatedRoute,
+    private apiService:ApiService,
+    private router:Router
+  ) { }
 
   ngOnInit(): void {
+
+    this.name = this.activatedRoute.snapshot.paramMap.get('name') || ''
+    this.getPokemon();
+  }
+
+  getPokemon(){
+    this.apiService.getByName(this.name).subscribe((data:IPokemon)=>{
+      this.image = data.sprites?.other['official-artwork'].front_default
+      this.pokemon = {
+        name:(data.name).toUpperCase(),
+        weight: parseFloat(((data.weight??1)*0.1).toFixed(1)),
+        height: parseFloat(((data.height??1)*0.1).toFixed(1))
+      };
+    })
+  }
+
+  redirectToback(){
+    this.router.navigate(['/home'])
   }
 
 }

@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { forkJoin, Observable } from 'rxjs';
 import { IPokemon } from 'src/app/interfaces/pokemon';
 import { ApiService } from 'src/app/services/api.service';
-import { catchError, switchMap } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -14,21 +15,22 @@ export class HomeComponent implements OnInit {
   pokemonList: IPokemon[] = [];
   nomSearch:string='';
   offset = 0;
+  sizePaginationList:number[] = [10,15,20]
 
   constructor(
-    private apiService:ApiService
+    private apiService:ApiService,
+    private router:Router
   ) { }
 
   ngOnInit(): void {
-    
-    this.getList(this.offset,10);
+    this.getList(this.offset, 10);
   }
 
   
   //------------ METODO PARA LISTAR ------------//
-  private getList(offset:number, limit: number){
-
-    this.apiService.getList(offset,limit).pipe(
+  getList(offset:number, limit?: any){
+    
+    this.apiService.getList(offset,limit.value).pipe(
       switchMap((res) => {
         const requests: Observable<IPokemon>[] = res.results.map((pokemon: any) => 
           this.apiService.getByName(pokemon.name));
@@ -42,7 +44,7 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  search(event:any){
-
+  viewDetails(name:string){
+    this.router.navigate([`/detail`,{name:name}])
   }
 }

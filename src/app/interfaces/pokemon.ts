@@ -1,4 +1,6 @@
 export interface IPokemon{
     name:string;
-    sprites:any;
+    sprites?:any;
+    weight?:number;
+    height?:number
 }

@@ -1,1 +1,11 @@
-<p>detail works!</p>
+<div class="main">
+    <div class="img-back" (click)="redirectToback()"><i class="bi bi-caret-left-fill"></i></div>
+    <div class="section-picture">
+        <div class="main-data">
+            <label class="name">{{pokemon.name}}</label>
+            <label>Peso: {{pokemon.weight}}kg</label>
+            <label>Altura: {{pokemon.height}}m</label>
+        </div>
+        <img [src]="image">
+    </div>
+</div>
