@@ -14,10 +14,11 @@
     display: flex;
     justify-content: space-between;
     img{
-        width: 50%;
+        width: 45%;
     }
 }
 
+//------ SECCION PRINCIPAL - IMAGEN -----//
 .main-data{
     display: flex;
     justify-content: center;
@@ -25,11 +26,17 @@
     padding: 1.5rem;
     label{
         margin: 0.5rem;
+        font-weight: 200;
+        background-color: rgb(227, 226, 226);
+        border-radius: 1rem;
+        padding: 0.4rem 0;
+        text-align: center;
     }
 }
 .name{
     font-size: 2rem;
     font-weight: bold;
+    background: none !important;
 }
 .img-back{
     width: 100%;
@@ -40,4 +47,38 @@
 }
 .img-back i{
     font-size: 40px;
+}
+
+// ------ ESTADISTICAS -----//
+.section-stats{
+    width: 60%;
+    padding: 1rem;
+    display: flex;
+    gap: 1rem;
+    .title-stats{
+        display: flex;
+        align-items: center;
+    }
+}
+
+.stats-data{
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    width: 80%;
+    div{
+        display: flex;
+        width: 100%;
+        gap: 0 0.5rem;
+    }
+    label{
+        width: 5rem;
+    }
+}
+.percentaje{
+    background-color: #507cbd;
+    width: 100% ;
+    height: 1.4rem;
+    border-radius: 0.5rem;
+    
 }

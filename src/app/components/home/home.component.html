@@ -25,6 +25,9 @@
         <div class="card" *ngFor="let item of pokemonList" (click)="viewDetails(item.name)">
             <img [src]="item.sprites">
             <label>{{item.name}}</label>
+            <div class="card-types">
+                <span class="types" *ngFor="let type of item.types">{{type.type.name.toUpperCase()}}</span>
+            </div>
         </div>
     </div>
 </main>

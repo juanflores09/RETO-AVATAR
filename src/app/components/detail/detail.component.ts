@@ -14,6 +14,8 @@ export class DetailComponent implements OnInit {
   name:string = '';
   image:string='';
   pokemon!:IPokemon;
+  stats:any;
+  types:any;
 
   constructor(
     private activatedRoute:ActivatedRoute,
@@ -29,11 +31,15 @@ export class DetailComponent implements OnInit {
 
   getPokemon(){
     this.apiService.getByName(this.name).subscribe((data:IPokemon)=>{
+      console.log("data--> ",data)
       this.image = data.sprites?.other['official-artwork'].front_default
+      this.stats = data.stats; 
+      this.types = data.types;
       this.pokemon = {
         name:(data.name).toUpperCase(),
         weight: parseFloat(((data.weight??1)*0.1).toFixed(1)),
-        height: parseFloat(((data.height??1)*0.1).toFixed(1))
+        height: parseFloat(((data.height??1)*0.1).toFixed(1)),
+      
       };
     })
   }

@@ -8,4 +8,14 @@
         </div>
         <img [src]="image">
     </div>
+    <div class="section-stats">
+        <span class="title-stats">ESTADÍSTICAS</span>
+        <div class="stats-data">
+            <div *ngFor="let item of stats">
+                <label>{{item.stat.name}}</label>
+                <div class="percentaje"></div>
+                <label>{{item.base_stat}}</label>
+            </div>
+        </div>
+    </div>
 </div>
