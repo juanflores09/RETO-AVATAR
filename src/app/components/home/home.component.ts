@@ -12,22 +12,24 @@ import { catchError, switchMap } from 'rxjs/operators';
 export class HomeComponent implements OnInit {
 
   pokemonList: IPokemon[] = [];
+  nomSearch:string='';
+  offset = 0;
 
   constructor(
     private apiService:ApiService
   ) { }
 
   ngOnInit(): void {
-    this.getList()
+    
+    this.getList(this.offset,10);
   }
 
   
-  // METODO PARA LISTAR POKEMONES
-  private getList(){
+  //------------ METODO PARA LISTAR ------------//
+  private getList(offset:number, limit: number){
 
-    this.apiService.getList().pipe(
+    this.apiService.getList(offset,limit).pipe(
       switchMap((res) => {
-        console.log("RES -->",res)
         const requests: Observable<IPokemon>[] = res.results.map((pokemon: any) => 
           this.apiService.getByName(pokemon.name));
         return forkJoin(requests); // Utilizamos forkJoin para manejar las solicitudes en paralelo
@@ -37,8 +39,10 @@ export class HomeComponent implements OnInit {
         name: detail.name,
         sprites:detail.sprites?.other['official-artwork'].front_default
       }));
-
-      console.log(this.pokemonList)
     });
+  }
+
+  search(event:any){
+
   }
 }

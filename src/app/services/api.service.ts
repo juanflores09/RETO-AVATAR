@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -18,8 +18,13 @@ export class ApiService {
   ) { }
 
   // METODO PARA TRAER LISTA DE POKEMONES
-  getList():Observable<IApiResponse<IPokemon>>{
-    return this.httpClient.get<IApiResponse<IPokemon>>(`${this.url}/pokemon`)
+  getList(offset:number, limit:number):Observable<IApiResponse<IPokemon>>{
+    
+    const parameters = new HttpParams()
+      .set('offset',offset)
+      .set('limit',limit)
+
+    return this.httpClient.get<IApiResponse<IPokemon>>(`${this.url}/pokemon`,{params : parameters})
   }
 
   // METODO PARA BUSCAR POKEMON POR ID
