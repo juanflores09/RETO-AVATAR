@@ -38,7 +38,7 @@ export class HomeComponent implements OnInit {
 
       })).subscribe((details: IPokemon[]) => {
       this.pokemonList = details.map((detail: IPokemon) => ({
-        name: detail.name.toUpperCase(),
+        name: detail.name,
         sprites:detail.sprites?.other['official-artwork'].front_default,
         types:detail.types
       }));
