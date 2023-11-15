@@ -26,7 +26,6 @@ export class HomeComponent implements OnInit {
     this.getList(this.offset, 10);
   }
 
-  
   //------------ METODO PARA LISTAR ------------//
   getList(offset:number, limit?: any){
     
@@ -43,6 +42,18 @@ export class HomeComponent implements OnInit {
         types:detail.types
       }));
     });
+  }
+
+   //------------ Metodo para buscar por nombre -------//
+   getPokemon(){
+    this.apiService.getByName(this.nomSearch).subscribe((data:IPokemon)=>{
+      this.pokemonList = [];
+      this.pokemonList.push({
+        name: data.name,
+        sprites:data.sprites?.other['official-artwork'].front_default,
+        types:data.types
+      })
+    })
   }
 
   viewDetails(name:string){

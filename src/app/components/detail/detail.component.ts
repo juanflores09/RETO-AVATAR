@@ -29,9 +29,9 @@ export class DetailComponent implements OnInit {
     this.getPokemon();
   }
 
+  // Metodo para buscar por nombre
   getPokemon(){
     this.apiService.getByName(this.name).subscribe((data:IPokemon)=>{
-      console.log("data--> ",data)
       this.image = data.sprites?.other['official-artwork'].front_default
       this.stats = data.stats; 
       this.types = data.types;

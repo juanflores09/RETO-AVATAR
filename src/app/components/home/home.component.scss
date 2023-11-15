@@ -16,6 +16,14 @@ main{
     width: 100%;
     padding: 0.8rem 0;
     justify-content: space-between;
+    align-items: center;
+    
+    .div-input{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 0 0.5rem;
+    }
     .input-search{
         height: 3.2rem;
         background-color:rgb(248, 250, 252);
@@ -23,6 +31,7 @@ main{
         display: flex;
         align-items: center;
         padding: 0 1rem;
+        width: 80%;
         input{
             width: 100%;
             height: 100%;
@@ -31,6 +40,18 @@ main{
             text-indent: 0.5rem;
             border-radius: 1.5rem;
             background: none;
+        }
+    }
+    .btn-search{
+        background-color: #507cbd;
+        border-radius: 1rem;
+        width: 5rem;
+        border: none;
+        color: #fff;
+        height: 2.5rem;
+        cursor: pointer;
+        &:hover{
+            background-color: #426292;
         }
     }
 }
@@ -60,7 +81,7 @@ main{
     width: 100%;
     height: 90%;
     display: grid;
-    grid-template-columns: repeat(auto-fit,minmax(15rem, 1fr));
+    grid-template-columns: repeat(auto-fill,minmax(15rem, 1fr));
     gap: 2rem;
     padding: 1rem;
 }
