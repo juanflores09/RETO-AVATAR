@@ -1,0 +1,8 @@
+<main>
+    <div class="container">
+        <div class="card" *ngFor="let item of pokemonList">
+            <img [src]="item.sprites">
+            <label>{{item.name}}</label>
+        </div>
+    </div>
+</main>

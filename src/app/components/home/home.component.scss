@@ -1,0 +1,34 @@
+main{
+    display: flex;
+    justify-content: center;
+    padding-top: 8vh;
+}
+
+.container{
+    width: 75%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(15rem, 1fr));
+    gap: 2rem;
+}
+
+.card{
+    background-color: rgb(252, 252, 252);
+    height: 40vh;
+    box-shadow: -1px 0px 18px 0px rgba(130,130,130,0.86);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    img{
+        width: 80%;
+    }
+    label{
+        font-size: 1.2rem;
+        color:  #3466AF;
+        font-weight: 500;
+    }
+}
+.card:hover{
+    cursor: pointer;
+    transform: scale(1.05);
+}
