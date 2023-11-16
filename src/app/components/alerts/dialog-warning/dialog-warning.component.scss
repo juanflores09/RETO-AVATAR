@@ -1,0 +1,15 @@
+mat-dialog-actions{
+    padding-top: 1rem;
+}
+.btn-ok{
+    background-color: #507cbd;
+    border-radius: 1rem;
+    width: 5rem;
+    border: none;
+    color: #fff;
+    height: 2.3rem;
+    cursor: pointer;
+    &:hover{
+        background-color: #426292;
+    }
+}
