@@ -18,6 +18,7 @@ export class HomeComponent implements OnInit {
   offset:number = 0;
   limit:number = 10;
   sizePaginationList:number[] = [10,15,20]
+  pageNum:number=1;
 
   urlImageDefault: string = '../../assets/img-default.png' // Imagen de usuario
 
@@ -47,6 +48,8 @@ export class HomeComponent implements OnInit {
         sprites:detail.sprites?.other['official-artwork'].front_default || this.urlImageDefault,
         types:detail.types
       }));
+      if(this.offset!=0) this.pageNum = this.offset/this.limit;
+      console.log("PAGE NUM",this.pageNum)
       this.alertService.loadingDialogClose();
     });
   }
@@ -61,7 +64,7 @@ export class HomeComponent implements OnInit {
     }
 
     this.alertService.loadingDialogShow("Cargando...");
-    this.apiService.getByName(this.nomSearch).subscribe((data:IPokemon)=>{
+    this.apiService.getByName(this.nomSearch.toLocaleLowerCase()).subscribe((data:IPokemon)=>{
       this.pokemonList = [];
       this.pokemonList.push({
         name: data.name,
@@ -80,19 +83,25 @@ export class HomeComponent implements OnInit {
     this.router.navigate([`/detail`,{name:name}])
   }
 
-  
+  //----------- PAGINACION ------------//
   getPage(action:number){ //Página siguiente cuando es 1, atras cuando es 0 
     if( action==1){
-      this.offset += this.limit; 
+      this.offset = this.offset  + this.limit; 
     }else{
-      this.offset -= this.limit; 
+      this.offset = this.offset - this.limit; 
     }
-    
     this.getList(this.offset,this.limit);
   }
 
   getSize(event:any){
-    this.limit = event.value;
+    this.limit = parseInt(event.value);
+    this.offset = 0;
+    this.getList(this.offset,this.limit);
+  }
+
+  firstPage(){
+    this.offset = 0;
+    this.pageNum = 1;
     this.getList(this.offset,this.limit);
   }
 }
