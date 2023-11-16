@@ -15,11 +15,11 @@ export class HomeComponent implements OnInit {
 
   pokemonList: IPokemon[] = [];
   nomSearch:string='';
+  sizePaginationList:number[] = [10,15,20]
   offset:number = 0;
   limit:number = 10;
-  sizePaginationList:number[] = [10,15,20]
   pageNum:number=1;
-
+  count:number=0;
   urlImageDefault: string = '../../assets/img-default.png' // Imagen de usuario
 
   constructor(
@@ -38,18 +38,19 @@ export class HomeComponent implements OnInit {
     this.alertService.loadingDialogShow("Cargando...")
     this.apiService.getList(offset, limit).pipe(
       switchMap((res) => {
+        this.count = res.count;
         const requests: Observable<IPokemon>[] = res.results.map((pokemon: any) => 
-          this.apiService.getByName(pokemon.name));
+        this.apiService.getByName(pokemon.name));
         return forkJoin(requests); // Utilizamos forkJoin para manejar las solicitudes en paralelo
 
       })).subscribe((details: IPokemon[]) => {
-      this.pokemonList = details.map((detail: IPokemon) => ({
+        
+        this.pokemonList = details.map((detail: IPokemon) => ({
         name: detail.name,
         sprites:detail.sprites?.other['official-artwork'].front_default || this.urlImageDefault,
         types:detail.types
       }));
       if(this.offset!=0) this.pageNum = this.offset/this.limit;
-      console.log("PAGE NUM",this.pageNum)
       this.alertService.loadingDialogClose();
     });
   }
@@ -84,7 +85,7 @@ export class HomeComponent implements OnInit {
   }
 
   //----------- PAGINACION ------------//
-  getPage(action:number){ //Página siguiente cuando es 1, atras cuando es 0 
+  getPage(action:number){ //Página siguiente cuando es llega 1, atras cuando llega 0 
     if( action==1){
       this.offset = this.offset  + this.limit; 
     }else{
@@ -93,12 +94,14 @@ export class HomeComponent implements OnInit {
     this.getList(this.offset,this.limit);
   }
 
+  // Método cuando se cambia de página (offset)
   getSize(event:any){
     this.limit = parseInt(event.value);
     this.offset = 0;
     this.getList(this.offset,this.limit);
   }
 
+  // Método cuando se cambia la cantidad de registros a mostrar (limit)
   firstPage(){
     this.offset = 0;
     this.pageNum = 1;
