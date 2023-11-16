@@ -35,7 +35,7 @@ export class HomeComponent implements OnInit {
   getList(offset:number, limit?: any){
     
     this.alertService.loadingDialogShow("Cargando...")
-    this.apiService.getList(offset, limit.value).pipe(
+    this.apiService.getList(offset, limit).pipe(
       switchMap((res) => {
         const requests: Observable<IPokemon>[] = res.results.map((pokemon: any) => 
           this.apiService.getByName(pokemon.name));
