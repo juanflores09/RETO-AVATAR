@@ -21,6 +21,7 @@ export class HomeComponent implements OnInit {
   pageNum:number=1;
   count:number=0;
   urlImageDefault: string = '../../assets/img-default.png' // Imagen de usuario
+  pageTotal:number=0;
 
   constructor(
     private apiService:ApiService,
@@ -30,6 +31,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.getList(this.offset, this.limit);
+    
   }
 
   //------------ METODO PARA LISTAR ------------//
@@ -39,6 +41,7 @@ export class HomeComponent implements OnInit {
     this.apiService.getList(offset, limit).pipe(
       switchMap((res) => {
         this.count = res.count;
+        this.getPageTotal();
         const requests: Observable<IPokemon>[] = res.results.map((pokemon: any) => 
         this.apiService.getByName(pokemon.name));
         return forkJoin(requests); // Utilizamos forkJoin para manejar las solicitudes en paralelo
@@ -49,8 +52,9 @@ export class HomeComponent implements OnInit {
         name: detail.name,
         sprites:detail.sprites?.other['official-artwork'].front_default || this.urlImageDefault,
         types:detail.types
+
       }));
-      if(this.offset!=0) this.pageNum = this.offset/this.limit;
+      this.pageNum = (this.offset + this.limit)/this.limit;
       this.alertService.loadingDialogClose();
     });
   }
@@ -58,7 +62,7 @@ export class HomeComponent implements OnInit {
    //------------ Metodo para buscar por nombre -------//
    getPokemon(){
     
-    // Validamos el nombre a buscar 
+    // Validamos que no esté vacío
     if(this.nomSearch =='' || this.nomSearch ==null ){
       this.alertService.warningDialog("Ingrese un nombre de Pokemon a buscar")
       return;
@@ -106,5 +110,11 @@ export class HomeComponent implements OnInit {
     this.offset = 0;
     this.pageNum = 1;
     this.getList(this.offset,this.limit);
+  }
+
+  //Método para obtener el total de páginas
+  getPageTotal(){
+    this.pageTotal = Math.floor(this.count/this.limit)
+    if(this.count%this.limit>0) this.pageTotal+=1;
   }
 }
