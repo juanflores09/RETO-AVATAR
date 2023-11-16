@@ -13,7 +13,7 @@
         <div class="stats-data">
             <div *ngFor="let item of stats">
                 <label>{{item.stat.name}}</label>
-                <div class="percentaje"></div>
+                <div class="percentaje" [style.width.%]="item.base_stat"></div>
                 <label>{{item.base_stat}}</label>
             </div>
         </div>
