@@ -15,7 +15,8 @@ export class HomeComponent implements OnInit {
 
   pokemonList: IPokemon[] = [];
   nomSearch:string='';
-  offset = 0;
+  offset:number = 0;
+  limit:number = 10;
   sizePaginationList:number[] = [10,15,20]
 
   urlImageDefault: string = '../../assets/img-default.png' // Imagen de usuario
@@ -27,13 +28,14 @@ export class HomeComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getList(this.offset, 10);
+    this.getList(this.offset, this.limit);
   }
 
   //------------ METODO PARA LISTAR ------------//
   getList(offset:number, limit?: any){
     
-    this.apiService.getList(offset,limit.value).pipe(
+    this.alertService.loadingDialogShow("Cargando...")
+    this.apiService.getList(offset, limit.value).pipe(
       switchMap((res) => {
         const requests: Observable<IPokemon>[] = res.results.map((pokemon: any) => 
           this.apiService.getByName(pokemon.name));
@@ -45,6 +47,7 @@ export class HomeComponent implements OnInit {
         sprites:detail.sprites?.other['official-artwork'].front_default || this.urlImageDefault,
         types:detail.types
       }));
+      this.alertService.loadingDialogClose();
     });
   }
 
@@ -75,5 +78,21 @@ export class HomeComponent implements OnInit {
 
   viewDetails(name:string){
     this.router.navigate([`/detail`,{name:name}])
+  }
+
+  
+  getPage(action:number){ //Página siguiente cuando es 1, atras cuando es 0 
+    if( action==1){
+      this.offset += this.limit; 
+    }else{
+      this.offset -= this.limit; 
+    }
+    
+    this.getList(this.offset,this.limit);
+  }
+
+  getSize(event:any){
+    this.limit = event.value;
+    this.getList(this.offset,this.limit);
   }
 }

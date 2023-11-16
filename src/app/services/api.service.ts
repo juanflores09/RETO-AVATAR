@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { IPokemon } from '../interfaces/pokemon';
-import { map } from 'rxjs/operators';
 import { IApiResponse } from '../interfaces/api-response';
 
 @Injectable({
@@ -18,7 +17,7 @@ export class ApiService {
   ) { }
 
   // METODO PARA TRAER LISTA DE POKEMONES
-  getList(offset:number, limit:number):Observable<IApiResponse<IPokemon>>{
+  getList(offset:number=0, limit:number=10):Observable<IApiResponse<IPokemon>>{
     
     const parameters = new HttpParams()
       .set('offset',offset)
